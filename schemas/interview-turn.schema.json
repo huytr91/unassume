@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://declare.local/schemas/interview-turn.schema.json",
+  "title": "DECLARE Interview Turn",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "questions", "confirmed", "unknown", "suggested"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["NOT_CLEAR", "CLEAR"]
+    },
+    "progress": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "confirmedCount": { "type": "integer", "minimum": 0 },
+        "remainingEstimate": { "type": "integer", "minimum": 0 },
+        "percentHint": { "type": "number", "minimum": 0, "maximum": 100 }
+      },
+      "description": "UX only; not a fixed questionnaire length."
+    },
+    "questions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/question" }
+    },
+    "confirmed": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/fact" },
+      "description": "User-confirmed only."
+    },
+    "suggested": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/fact" },
+      "description": "AI suggestions; never treat as confirmed."
+    },
+    "unknown": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/gap" }
+    },
+    "reasonSummary": { "type": "string" }
+  },
+  "$defs": {
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "text", "options", "allowCustom", "priority"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 },
+        "context": { "type": "string" },
+        "options": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Hints only."
+        },
+        "allowCustom": { "type": "boolean", "const": true },
+        "allowNotDecided": { "type": "boolean" },
+        "multi": { "type": "boolean" },
+        "priority": {
+          "type": "string",
+          "enum": ["blocking", "important", "optional"]
+        },
+        "reason": { "type": "string" }
+      }
+    },
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "value", "provenance"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "value": { "type": "string" },
+        "provenance": {
+          "type": "string",
+          "enum": ["user_confirmed", "ai_suggested"]
+        }
+      }
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "impact"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "impact": {
+          "type": "string",
+          "enum": ["changes_outcome_significantly", "nice_to_have"]
+        },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

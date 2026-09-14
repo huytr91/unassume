@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://declare.local/schemas/verified-request.schema.json",
+  "title": "DECLARE Verified Request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "objective",
+    "confirmedRequirements",
+    "constraints",
+    "businessRules",
+    "userDecisions",
+    "unresolvedItems",
+    "outputRequirements",
+    "instructionsToDownstreamAi",
+    "verifiedPrompt"
+  ],
+  "properties": {
+    "objective": { "type": "string" },
+    "confirmedRequirements": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "businessRules": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "userDecisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["topic", "decision"],
+        "properties": {
+          "topic": { "type": "string" },
+          "decision": { "type": "string" }
+        }
+      }
+    },
+    "unresolvedItems": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Empty or explicit deferrals only; never silently filled."
+    },
+    "outputRequirements": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "instructionsToDownstreamAi": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "verifiedPrompt": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Text prompt compiled only from confirmed + labeled unresolved."
+    }
+  }
+}
