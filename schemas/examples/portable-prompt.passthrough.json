@@ -1,0 +1,32 @@
+{
+  "$schema": "../portable-prompt.schema.json",
+  "schemaVersion": "1.0",
+  "mode": "passthrough",
+  "label": "UNVERIFIED_PARTIAL",
+  "locale": "vi",
+  "originalRequest": "Làm sao để dự án viral",
+  "portableText": "Thực hiện brief sau đây. Brief làm rõ một phần — không bịa phần còn thiếu.\n\nOBJECTIVE\nLàm sao để dự án viral\n\nCONFIRMED REQUIREMENTS\n- Đầu ra: Checklist hành động\n\nCONSTRAINTS\n- Brief làm rõ một phần.\n\nUNRESOLVED ITEMS\n- Chưa rõ dự án / sản phẩm cụ thể\n- Chưa rõ đối tượng mục tiêu\n\nOUTPUT REQUIREMENTS\n- Trả lời rõ, có cấu trúc; nêu giả định nếu cần.\n\nINSTRUCTIONS TO DOWNSTREAM AI\n- Chỉ dùng CONFIRMED REQUIREMENTS. Không bịa số liệu/nguồn/side-effect.",
+  "sections": {
+    "objective": "Làm sao để dự án viral",
+    "confirmedRequirements": ["Đầu ra: Checklist hành động"],
+    "constraints": ["Brief làm rõ một phần."],
+    "unresolvedItems": [
+      "Chưa rõ dự án / sản phẩm cụ thể",
+      "Chưa rõ đối tượng mục tiêu"
+    ],
+    "outputRequirements": ["Trả lời rõ, có cấu trúc; nêu giả định nếu cần."],
+    "instructionsToDownstreamAi": [
+      "Chỉ dùng CONFIRMED REQUIREMENTS. Không bịa số liệu/nguồn/side-effect."
+    ]
+  },
+  "passthrough": {
+    "reason": "user_explicit_proceed",
+    "warning": "PASSTHROUGH / làm rõ một phần — không bịa yêu cầu còn thiếu; nêu rõ phần mở.",
+    "confirmedFactCount": 1
+  },
+  "meta": {
+    "product": "Unassume",
+    "intent": "write",
+    "pack": "research"
+  }
+}

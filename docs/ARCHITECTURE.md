@@ -116,6 +116,17 @@ Request
   → else exhausted / user proceed → labeled passthrough (rare)
 ```
 
+## Portable prompt (integration)
+
+Machine-readable export for other agents:
+
+- Schema: [`schemas/portable-prompt.schema.json`](../schemas/portable-prompt.schema.json)
+- `mode`: `verified` | `passthrough`
+- `label`: `VERIFIED` | `UNVERIFIED_PARTIAL` | `PASSTHROUGH`
+- When `mode=passthrough`, document **must** include `passthrough.reason` + `passthrough.warning`
+
+Examples under `schemas/examples/`.
+
 ## Thin answer / mood-killer guard
 
 Policy: **always deliver a useful answer** (framework / checklist + stated assumptions). Never refusal-only.

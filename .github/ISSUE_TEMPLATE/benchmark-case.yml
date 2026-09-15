@@ -1,0 +1,38 @@
+name: Benchmark case
+description: Submit a real-world brief where raw LLM assumed something Unassume should clarify
+title: "[benchmark] "
+labels: ["benchmark"]
+body:
+  - type: textarea
+    id: request
+    attributes:
+      label: Original user request
+      description: Paste the free-form ask (anonymize secrets).
+    validations:
+      required: true
+  - type: textarea
+    id: raw_failure
+    attributes:
+      label: What did raw ChatGPT / Claude assume wrongly?
+      description: Optional but valuable for community seed quality.
+  - type: textarea
+    id: suggested_slots
+    attributes:
+      label: Which brief slots should have been asked?
+      description: e.g. platform, audience, scope, output, constraints
+  - type: dropdown
+    id: locale
+    attributes:
+      label: Locale
+      options:
+        - vi
+        - en
+    validations:
+      required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Consent
+      options:
+        - label: I confirm this case contains no secrets / personal data I am not allowed to share.
+          required: true

@@ -1,0 +1,28 @@
+{
+  "$schema": "../portable-prompt.schema.json",
+  "schemaVersion": "1.0",
+  "mode": "verified",
+  "label": "VERIFIED",
+  "locale": "vi",
+  "originalRequest": "Phân tích thị trường vàng trung hạn",
+  "portableText": "Thực hiện brief sau đây. Chỉ dùng phần đã xác nhận. Không bịa.\n\nOBJECTIVE\nPhân tích thị trường vàng trung hạn\n\nCONFIRMED REQUIREMENTS\n- Đối tượng: Cá nhân đầu tư\n- Phạm vi: Trung hạn (1–3 tháng)\n- Đầu ra: Tóm tắt ngắn\n\nCONSTRAINTS\n- Chỉ dùng fact đã xác nhận.\n\nUNRESOLVED ITEMS\n- Không có hoặc đã để mở tường minh.\n\nOUTPUT REQUIREMENTS\n- Trả lời rõ, có cấu trúc; nêu giả định nếu cần.\n\nINSTRUCTIONS TO DOWNSTREAM AI\n- Chỉ dùng CONFIRMED REQUIREMENTS. Không bịa số liệu/nguồn/side-effect.",
+  "sections": {
+    "objective": "Phân tích thị trường vàng trung hạn",
+    "confirmedRequirements": [
+      "Đối tượng: Cá nhân đầu tư",
+      "Phạm vi: Trung hạn (1–3 tháng)",
+      "Đầu ra: Tóm tắt ngắn"
+    ],
+    "constraints": ["Chỉ dùng fact đã xác nhận."],
+    "unresolvedItems": ["Không có hoặc đã để mở tường minh."],
+    "outputRequirements": ["Trả lời rõ, có cấu trúc; nêu giả định nếu cần."],
+    "instructionsToDownstreamAi": [
+      "Chỉ dùng CONFIRMED REQUIREMENTS. Không bịa số liệu/nguồn/side-effect."
+    ]
+  },
+  "meta": {
+    "product": "Unassume",
+    "intent": "analyze",
+    "pack": "research"
+  }
+}

@@ -1,0 +1,232 @@
+[
+  {
+    "id": "B01",
+    "request": "Tạo hệ thống quản lý nhân viên",
+    "locale": "vi",
+    "domain_hint": "coding",
+    "seeded_by": "maintainer",
+    "expect_interview": true,
+    "note": "Classic build — platform/output usually missing"
+  },
+  {
+    "id": "B02",
+    "request": "Build a CRM for small retail shops",
+    "locale": "en",
+    "domain_hint": "coding",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B03",
+    "request": "Phân tích file Excel doanh thu tháng trước",
+    "locale": "vi",
+    "domain_hint": "data",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B04",
+    "request": "Analyze this CSV of churned customers",
+    "locale": "en",
+    "domain_hint": "data",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B05",
+    "request": "Thiết kế quy trình duyệt đơn hàng cho nhân viên và quản lý",
+    "locale": "vi",
+    "domain_hint": "business_ops",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B06",
+    "request": "Phân tích thị trường vàng",
+    "locale": "vi",
+    "domain_hint": "research",
+    "seeded_by": "maintainer",
+    "expect_interview": true,
+    "note": "Must ask meta brief, not gold-price quiz"
+  },
+  {
+    "id": "B07",
+    "request": "Gold market outlook for the next quarter",
+    "locale": "en",
+    "domain_hint": "research",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B08",
+    "request": "Làm sao để dự án viral",
+    "locale": "vi",
+    "domain_hint": "growth",
+    "seeded_by": "maintainer",
+    "expect_interview": true,
+    "note": "Subject/audience missing — must interview"
+  },
+  {
+    "id": "B09",
+    "request": "How do I make my SaaS go viral on Twitter?",
+    "locale": "en",
+    "domain_hint": "growth",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B10",
+    "request": "Viết email từ chối ứng viên lịch sự",
+    "locale": "vi",
+    "domain_hint": "write",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B11",
+    "request": "Draft a launch announcement for our waitlist",
+    "locale": "en",
+    "domain_hint": "write",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B12",
+    "request": "Đối chiếu hai bảng công nợ",
+    "locale": "vi",
+    "domain_hint": "data",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B13",
+    "request": "So sánh NestJS và Express cho API nội bộ",
+    "locale": "vi",
+    "domain_hint": "decide",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B14",
+    "request": "Should we use Postgres or Mongo for this inventory app?",
+    "locale": "en",
+    "domain_hint": "decide",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B15",
+    "request": "Tự động gửi báo cáo doanh thu mỗi sáng vào Slack",
+    "locale": "vi",
+    "domain_hint": "automate",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B16",
+    "request": "Automate weekly invoice reminders by email",
+    "locale": "en",
+    "domain_hint": "automate",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B17",
+    "request": "Giá vàng sắp tới có tăng không?",
+    "locale": "vi",
+    "domain_hint": "research",
+    "seeded_by": "maintainer",
+    "expect_interview": true,
+    "note": "Forecast ask — still need scope/constraints meta"
+  },
+  {
+    "id": "B18",
+    "request": "Làm app đặt lịch cắt tóc online",
+    "locale": "vi",
+    "domain_hint": "coding",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B19",
+    "request": "Migrate our Laravel monolith to microservices",
+    "locale": "en",
+    "domain_hint": "coding",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B20",
+    "request": "Viết bài blog về năng suất làm việc",
+    "locale": "vi",
+    "domain_hint": "write",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B21",
+    "request": "Checklist triển khai CI/CD cho repo Node",
+    "locale": "vi",
+    "domain_hint": "coding",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B22",
+    "request": "Tóm tắt rủi ro pháp lý khi thu thập dữ liệu người dùng Việt Nam",
+    "locale": "vi",
+    "domain_hint": "research",
+    "seeded_by": "maintainer",
+    "expect_interview": true,
+    "note": "Legal — ask audience/output/constraints, not quiz statutes"
+  },
+  {
+    "id": "B23",
+    "request": "What is TypeScript?",
+    "locale": "en",
+    "domain_hint": "ordinary",
+    "seeded_by": "maintainer",
+    "expect_interview": false,
+    "note": "Definitional — ordinary path OK"
+  },
+  {
+    "id": "B24",
+    "request": "Nghĩa là gì OOP?",
+    "locale": "vi",
+    "domain_hint": "ordinary",
+    "seeded_by": "maintainer",
+    "expect_interview": false
+  },
+  {
+    "id": "B25",
+    "request": "Thiết kế dashboard KPI bán hàng cho giám đốc",
+    "locale": "vi",
+    "domain_hint": "data",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B26",
+    "request": "Plan a content calendar for a B2B fintech LinkedIn page",
+    "locale": "en",
+    "domain_hint": "growth",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B27",
+    "request": "Refactor authentication to support SSO",
+    "locale": "en",
+    "domain_hint": "coding",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  },
+  {
+    "id": "B28",
+    "request": "Làm SOP onboarding nhân viên mới",
+    "locale": "vi",
+    "domain_hint": "business_ops",
+    "seeded_by": "maintainer",
+    "expect_interview": true
+  }
+]

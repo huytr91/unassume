@@ -90,13 +90,17 @@ export function planInterview(request: string, personalHints: PersonalHint[] = [
   const pack = detectDomainPack(request)
 
   // Pure definitional one-liners only — not work requests
+  // Note: JS \b is ASCII-only; do not rely on \b after Vietnamese letters.
   const workish =
     /tạo|build|phân tích|analyze|viết|write|thiết kế|design|so sánh|compare|tự động|automate|triển khai|implement|hệ thống|app|crm|thị trường|excel|quy trình/i.test(trimmed)
   const ordinaryQa =
     !workish
     && !pack
     && trimmed.length < 80
-    && /^(vì sao|tại sao|why\b|what is\b|what's\b|nghĩa là gì|định nghĩa)\b/i.test(trimmed)
+    && (
+      /^(why|what is|what's)\b/i.test(trimmed)
+      || /^(vì sao|tại sao|nghĩa là gì|định nghĩa)(\s|$|[?.!:])/i.test(trimmed)
+    )
 
   if (ordinaryQa) {
     return {

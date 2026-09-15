@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unassume.dev/schemas/portable-prompt.schema.json",
+  "title": "Unassume Portable Prompt",
+  "description": "Single pasteable brief for a downstream AI/agent. Compiled from user-confirmed facts only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "mode",
+    "locale",
+    "originalRequest",
+    "portableText",
+    "sections"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["verified", "passthrough"],
+      "description": "verified = CLEAR gate passed. passthrough = user proceeded early or clarification exhausted."
+    },
+    "locale": {
+      "type": "string",
+      "enum": ["vi", "en"]
+    },
+    "originalRequest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "label": {
+      "type": "string",
+      "description": "Human-visible status label for UIs.",
+      "enum": [
+        "VERIFIED",
+        "UNVERIFIED_PARTIAL",
+        "PASSTHROUGH"
+      ]
+    },
+    "portableText": {
+      "type": "string",
+      "minLength": 40,
+      "description": "Ready-to-paste blob (lead instruction + structured sections). Must not be only the raw one-line request."
+    },
+    "sections": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "objective",
+        "confirmedRequirements",
+        "constraints",
+        "unresolvedItems",
+        "outputRequirements",
+        "instructionsToDownstreamAi"
+      ],
+      "properties": {
+        "objective": { "type": "string" },
+        "confirmedRequirements": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "constraints": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "unresolvedItems": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Gaps left open or deferred; never silently filled."
+        },
+        "outputRequirements": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "instructionsToDownstreamAi": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "businessRules": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Only if the user explicitly stated them."
+        },
+        "userDecisions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["topic", "decision"],
+            "properties": {
+              "topic": { "type": "string" },
+              "decision": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "passthrough": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Present when mode is passthrough (or label is UNVERIFIED_PARTIAL / PASSTHROUGH).",
+      "required": ["reason", "warning"],
+      "properties": {
+        "reason": {
+          "type": "string",
+          "enum": [
+            "user_explicit_proceed",
+            "clarification_exhausted",
+            "model_interview_unavailable"
+          ]
+        },
+        "warning": {
+          "type": "string",
+          "description": "Must tell downstream not to invent missing requirements."
+        },
+        "confirmedFactCount": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "intent": { "type": "string" },
+        "pack": { "type": ["string", "null"] },
+        "product": { "type": "string", "const": "Unassume" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "mode": { "const": "passthrough" } }
+      },
+      "then": {
+        "required": ["passthrough", "label"],
+        "properties": {
+          "label": {
+            "enum": ["UNVERIFIED_PARTIAL", "PASSTHROUGH"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "mode": { "const": "verified" } }
+      },
+      "then": {
+        "properties": {
+          "label": { "const": "VERIFIED" }
+        }
+      }
+    }
+  ]
+}
