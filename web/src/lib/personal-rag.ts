@@ -3,6 +3,8 @@
  * No cloud telemetry, no model training. Frequent answers become local options.
  */
 
+import { isSafeSlotValue } from './slot-safety.ts'
+
 export type PersonalEntry = {
   intent: string
   slot: string
@@ -52,8 +54,6 @@ export function clearPersonalRag() {
   localStorage.removeItem(STORAGE_KEY)
 }
 
-const SKIP_VALUE = /^(not decided|chưa quyết định|chưa xác định|ok|tùy|được|none|không)$/i
-
 /** Record answers after a successful interview round / CLEAR. */
 export function recordPersonalAnswers(input: {
   intent?: string
@@ -66,7 +66,7 @@ export function recordPersonalAnswers(input: {
 
   for (const a of input.answers) {
     const value = a.value.replace(/^\★\s*/, '').trim()
-    if (!value || value.length < 2 || SKIP_VALUE.test(value)) continue
+    if (!isSafeSlotValue(value)) continue
     const idx = entries.findIndex((e) => e.intent === intent && e.slot === a.slot && e.value === value)
     if (idx >= 0) {
       entries[idx] = {
@@ -96,6 +96,7 @@ export function getPersonalHints(intent?: string): PersonalHint[] {
   const entries = loadPersonalEntries()
   return entries
     .filter((e) => e.count >= THRESHOLD)
+    .filter((e) => isSafeSlotValue(e.value))
     .filter((e) => !intent || e.intent === intent || e.intent === 'general')
     .map((e) => ({ slot: e.slot, value: e.value, count: e.count }))
     .sort((a, b) => b.count - a.count)

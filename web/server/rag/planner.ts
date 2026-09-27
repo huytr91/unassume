@@ -92,7 +92,7 @@ export function planInterview(request: string, personalHints: PersonalHint[] = [
   // Pure definitional one-liners only — not work requests
   // Note: JS \b is ASCII-only; do not rely on \b after Vietnamese letters.
   const workish =
-    /tạo|build|phân tích|analyze|viết|write|thiết kế|design|so sánh|compare|tự động|automate|triển khai|implement|hệ thống|app|crm|thị trường|excel|quy trình/i.test(trimmed)
+    /tạo|build|create|draft|secure|optimize|import|redesign|monitor|phân tích|analyze|viết|write|thiết kế|design|so sánh|compare|tự động|automate|triển khai|implement|hệ thống|app|crm|thị trường|excel|quy trình|campaign|contract|recommendation|appointment|tutor|invoice|delivery|dashboard|database|clean/i.test(trimmed)
   const ordinaryQa =
     !workish
     && !pack

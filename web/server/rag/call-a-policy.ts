@@ -23,20 +23,29 @@ export const CALL_A_ALLOWED_SLOTS = new Set([
 ])
 
 /**
+ * Brief / meta cues — never treat as subject-matter quiz
+ * (e.g. "What is the main objective?" must stay).
+ */
+const BRIEF_META_CUE =
+  /\b(objective|scope|output|format|audience|constraint|period|time window|sources?|channel|done when|who is this for|main objective|output format|time window or scope)\b|đầu ra|phạm vi|mục tiêu|đối tượng|ràng buộc|giai đoạn|kỳ nào|nguồn nào|ai sẽ dùng|thế nào là kết quả|ưu tiên kênh/i
+
+/**
  * Heuristic: question quizzes the user on domain knowledge / causes / facts
  * instead of clarifying the brief.
+ * Avoid bare `what is` / `who is the main` — those match meta templates.
  */
 const SUBJECT_MATTER_QUIZ =
-  /nguyên nhân|nguyên do|lý do chính|ai là|nhóm đối tượng|yếu tố bên ngoài|đáp án|đúng nhất|gây ra|ảnh hưởng bởi|what (is|are|causes)|which of the following|who (is|are) (the )?(main|primary)|root cause|đúng hay sai|trắc nghiệm|giải thích (tại sao|vì sao)|hãy chọn|chọn đáp án|true or false|multiple choice|câu hỏi kiểm tra|quiz\b|kiến thức về/i
+  /nguyên nhân|nguyên do|lý do chính|ai là|nhóm đối tượng|yếu tố bên ngoài|đáp án|đúng nhất|gây ra|ảnh hưởng bởi|what causes|what (is|are) the (main|primary|root) (cause|reason|factor|driver)|which of the following|who (is|are) (the )?(main|primary) (cause|factor|group|people|buyers|sellers)|root cause|đúng hay sai|trắc nghiệm|giải thích (tại sao|vì sao)|hãy chọn|chọn đáp án|true or false|multiple choice|câu hỏi kiểm tra|quiz\b|kiến thức về/i
 
 const SUBJECT_OPTIONS =
   /giảm nhu cầu|tăng cung|lãi suất|fed\b|địa chính trị|người mua vàng|người bán vàng|toàn cầu|kinh tế vĩ mô|đúng cả|cả a và b|tất cả các đáp án/i
 
 export function looksLikeSubjectMatterQuiz(text: string, options: string[] = []): boolean {
+  if (BRIEF_META_CUE.test(text)) return false
   if (SUBJECT_MATTER_QUIZ.test(text)) return true
   const joined = options.join(' | ')
   // Many factual-looking options without brief cues → likely quiz
-  if (options.length >= 3 && SUBJECT_OPTIONS.test(joined) && !/kỳ|giai đoạn|đầu ra|phạm vi|format|audience|nguồn được phép/i.test(text)) {
+  if (options.length >= 3 && SUBJECT_OPTIONS.test(joined) && !BRIEF_META_CUE.test(text)) {
     return true
   }
   return false

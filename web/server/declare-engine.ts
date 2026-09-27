@@ -15,6 +15,8 @@ import {
 import { detectDomainPack } from './rag/packs/index.ts'
 import { detectIntent, detectLocale } from './rag/ontology.ts'
 import { buildFollowUpQuestions, looksLikeThinRefusal, nextClarifySlots } from './rag/thin-answer.ts'
+import { buildPortablePromptDocument, type PortablePromptDocument } from './rag/portable-prompt.ts'
+import { sanitizeConfirmedFacts } from '../src/lib/slot-safety.ts'
 import type { ChatMessage, ProviderId } from './providers.ts'
 
 export type Fact = { id: string; label: string; value: string }
@@ -48,6 +50,8 @@ export type VerifiedResult = {
   answer: string
   structuredRequest: string
   verifiedPrompt: string
+  /** Schema v1.0 portable prompt document (see schemas/portable-prompt.schema.json). */
+  portableDocument: PortablePromptDocument
   mode?: 'verified' | 'passthrough'
   /** When true, UI should show answer AND offer continue-clarify (never hide the answer). */
   needsMoreInterview?: boolean
@@ -566,6 +570,7 @@ export async function compileVerifiedAnswer(args: {
   signal?: AbortSignal
 }): Promise<VerifiedResult> {
   const mode = args.mode ?? 'verified'
+  const confirmed = sanitizeConfirmedFacts(args.confirmed)
   let content: string
   try {
     content = await args.chat({
@@ -581,7 +586,7 @@ export async function compileVerifiedAnswer(args: {
           content: JSON.stringify({
             mode,
             originalRequest: args.request,
-            userConfirmedFacts: args.confirmed,
+            userConfirmedFacts: confirmed,
           }, null, 2),
         },
       ],
@@ -601,7 +606,7 @@ export async function compileVerifiedAnswer(args: {
 
   const locale = planLocale(args.request)
   const structured = String(raw.structuredRequest || '').trim()
-    || buildStructuredFallback(args.request, args.confirmed, locale, mode)
+    || buildStructuredFallback(args.request, confirmed, locale, mode)
 
   let portable = String(raw.verifiedPrompt || '').trim()
   if (isWeakPortablePrompt(portable, args.request)) {
@@ -614,15 +619,30 @@ export async function compileVerifiedAnswer(args: {
   const thin = looksLikeThinRefusal(answer)
   const suggestMore = modelSaysNeedsMore || thin || nextClarifySlots(
     args.request,
-    args.confirmed.map((f) => ({ id: f.id, value: f.value })),
+    confirmed.map((f) => ({ id: f.id, value: f.value })),
   ).length >= 2
   const followUpQuestions = suggestMore
     ? buildFollowUpQuestions(
       args.request,
-      args.confirmed.map((f) => ({ id: f.id, value: f.value })),
+      confirmed.map((f) => ({ id: f.id, value: f.value })),
       locale,
     ).map(toInterview)
     : undefined
+
+  const intent = detectIntent(args.request)
+  const pack = detectDomainPack(args.request)
+  const unresolved = followUpQuestions?.map((q) => q.text) ?? []
+  const portableDocument = buildPortablePromptDocument({
+    mode,
+    locale,
+    originalRequest: args.request,
+    portableText: portable,
+    confirmed,
+    unresolvedItems: unresolved.length ? unresolved : undefined,
+    passthroughReason: mode === 'passthrough' ? 'user_explicit_proceed' : undefined,
+    intent,
+    pack: pack?.id ?? null,
+  })
 
   return {
     answer,
@@ -636,5 +656,6 @@ export async function compileVerifiedAnswer(args: {
       : undefined,
     structuredRequest: structured,
     verifiedPrompt: portable,
+    portableDocument,
   }
 }

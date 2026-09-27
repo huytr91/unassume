@@ -35,10 +35,34 @@ export type InterviewTurn = {
   meta?: { intent?: string; pack?: string | null }
 }
 
+export type PortablePromptDocument = {
+  schemaVersion: '1.0'
+  mode: 'verified' | 'passthrough'
+  label: 'VERIFIED' | 'UNVERIFIED_PARTIAL' | 'PASSTHROUGH'
+  locale: 'vi' | 'en'
+  originalRequest: string
+  portableText: string
+  sections: {
+    objective: string
+    confirmedRequirements: string[]
+    constraints: string[]
+    unresolvedItems: string[]
+    outputRequirements: string[]
+    instructionsToDownstreamAi: string[]
+  }
+  passthrough?: {
+    reason: string
+    warning: string
+    confirmedFactCount?: number
+  }
+  meta?: { intent?: string; pack?: string | null; product: 'Unassume' }
+}
+
 export type VerifiedResult = {
   answer: string
   structuredRequest: string
   verifiedPrompt: string
+  portableDocument?: PortablePromptDocument
   mode?: 'verified' | 'passthrough'
   needsMoreInterview?: boolean
   followUpQuestions?: InterviewQuestion[]

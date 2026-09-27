@@ -4,7 +4,7 @@ import type { DomainPack } from '../ontology.ts'
 export const dataPack: DomainPack = {
   id: 'data',
   label: { vi: 'Dữ liệu / Excel', en: 'Data / Excel' },
-  detect: /excel|xlsx|csv|dữ liệu|dataset|bảng|sheet|cột|pivot|thống kê|sql|query|dashboard|power bi|số liệu/i,
+  detect: /excel|xlsx|csv|dữ liệu|dataset|bảng|sheet|cột|pivot|thống kê|sql|query|dashboard|power bi|số liệu|postgres|postgresql|portfolio|returns?|fund report|monthly report|invoice|pdf|ocr|clean (up )?(the )?(data|database|records)|dedup|database.*(clean|production)|import .*excel/i,
   intents: ['analyze', 'transform', 'compare'],
   requiredSlots: ['objective', 'evidence', 'output'],
   questions: [

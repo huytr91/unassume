@@ -622,6 +622,15 @@ export default function App() {
               >
                 {copied === 'prompt' ? 'Đã sao chép' : 'Sao chép prompt'}
               </button>
+              {result.portableDocument ? (
+                <button
+                  type="button"
+                  className="ghost-btn"
+                  onClick={() => copyText('portable-json', JSON.stringify(result.portableDocument, null, 2))}
+                >
+                  {copied === 'portable-json' ? 'Đã sao chép' : 'Sao chép JSON schema'}
+                </button>
+              ) : null}
             </div>
           </section>
         </>
@@ -738,8 +747,8 @@ export default function App() {
                       </div>
                       <small>
                         {rememberKey
-                          ? 'Khóa được lưu trên máy này để không phải kết nối lại mỗi lần mở; không lưu vào dự án hay cơ sở dữ liệu.'
-                          : 'Khóa chỉ còn trong phiên tab này; đóng cửa sổ là mất.'}
+                          ? 'Nhớ kết nối: key lưu plaintext trên máy này (localStorage) để khỏi dán lại mỗi lần. Chỉ chạy localhost. Không đưa lên cloud Unassume.'
+                          : 'Không nhớ: key chỉ trong tab này; đóng cửa sổ là mất — phải kết nối lại lần sau.'}
                       </small>
                     </>
                   )}

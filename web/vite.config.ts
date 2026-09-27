@@ -3,6 +3,41 @@ import type { Plugin } from 'vite'
 import { defineConfig } from 'vite'
 import { handleDeclareApi } from './server/api.ts'
 
+/** Localhost CSP — allow Vite inline HMR hook + Google Fonts used by index.html. */
+const CSP = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "img-src 'self' data:",
+  "font-src 'self' https://fonts.gstatic.com data:",
+  "connect-src 'self' ws://127.0.0.1:* ws://localhost:* http://127.0.0.1:* http://localhost:* https:",
+  "frame-ancestors 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join('; ')
+
+function securityHeadersPlugin(): Plugin {
+  return {
+    name: 'unassume-security-headers',
+    configureServer(server) {
+      server.middlewares.use((_req, res, next) => {
+        res.setHeader('Content-Security-Policy', CSP)
+        res.setHeader('X-Content-Type-Options', 'nosniff')
+        res.setHeader('Referrer-Policy', 'no-referrer')
+        next()
+      })
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use((_req, res, next) => {
+        res.setHeader('Content-Security-Policy', CSP)
+        res.setHeader('X-Content-Type-Options', 'nosniff')
+        res.setHeader('Referrer-Policy', 'no-referrer')
+        next()
+      })
+    },
+  }
+}
+
 function declareApiPlugin(): Plugin {
   return {
     name: 'declare-api',
@@ -23,7 +58,7 @@ function declareApiPlugin(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), declareApiPlugin()],
+  plugins: [react(), securityHeadersPlugin(), declareApiPlugin()],
   server: {
     host: '127.0.0.1',
     port: 3500,
